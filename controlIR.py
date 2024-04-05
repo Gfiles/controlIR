@@ -22,6 +22,7 @@ def readConfig():
                 "off" : [
                     "S03707098"
                 ]
+	    }
         }
         # Serializing json
         json_object = json.dumps(data, indent=4)
