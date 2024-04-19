@@ -13,16 +13,18 @@ def readConfig():
     else:
         data = {
 	        "uart" : "auto",
-            "baudrate" : 115200,
-            "numTV" : 1,
-            "commands" : {
-                "on" : [
-                    "S03707002"
-                ],
-                "off" : [
-                    "S03707098"
-                ]
-	    }
+            	"baudrate" : 115200,
+            	"numTV" : 1,
+            	"commands" : {
+                	"on" : [
+				"S02707099",
+                    		"N02004196"
+		        	],
+                	"off" : [
+                    		"S02707098",
+                    		"N02004197"
+                	]
+	    	}
         }
         # Serializing json
         json_object = json.dumps(data, indent=4)
