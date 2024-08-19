@@ -1,22 +1,25 @@
 #include <IRremote.hpp>
 #include <TinyIRSender.hpp>
 
-void setup() {
-  Serial.begin(115200);
+const int BUFFER_SIZE = 10;
+char buf[BUFFER_SIZE];
 
-  uint8_t tSendPin = 3;
+void setup() {
+  Serial.begin(9600);
+
+  uint8_t tSendPin = 2;
   IrSender.begin(tSendPin, ENABLE_LED_FEEDBACK, USE_DEFAULT_FEEDBACK_LED_PIN); // Specify send pin and enable feedback LED at default feedback LED pin
   // You can change send pin later with IrSender.setSendPin();
 
   Serial.println("Ready");
 }
 
-String valA, inString, strpin, stradr, strcom, strsum1, strsum2, strsum3, strsum4, strsum5, strsum6, strsum7, strsum8;
+String valA, strpin, stradr, strcom, strsum1, strsum2, strsum3, strsum4, strsum5, strsum6, strsum7, strsum8;
 
 void loop() {
   if (Serial.available() > 0) {
-    valA = Serial.readString();
-    inString = String(valA);
+    Serial.readBytesUntil('\n', buf, BUFFER_SIZE);
+    valA = String(buf);
 
     Serial.println(valA);
     /*Serial.println(inString.length());
