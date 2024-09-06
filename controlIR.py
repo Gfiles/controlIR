@@ -13,7 +13,7 @@ def readConfig():
     else:
         data = {
 	        "uart" : "auto",
-            	"baudrate" : 115200,
+            	"baudrate" : 9600,
             	"numTV" : 1,
             	"commands" : {
                 	"on" : [
