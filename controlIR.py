@@ -13,17 +13,25 @@ def readConfig():
     else:
         data = {
 	        "uart" : "auto",
-            	"baudrate" : 9600,
-            	"numTV" : 1,
-            	"commands" : {
-                	"on" : [
-				"S02707099",
-                    		"N020040c4"
-		        	],
-                	"off" : [
-                    		"S02707098",
-                    		"N020040c5"
-                	]
+            "baudrate" : 9600,
+            "numTV" : 6,
+            "commands" : {
+                "on" : [
+				    "S02707099",
+                    "N020040c4",
+                    "S02707099",
+                    "S02707099",
+                    "S02707099",
+                    "S02707099"
+		        ],
+                "off" : [
+                    "S02707098",
+                    "N020040c5",
+                    "S02707098",
+                    "S02707098",
+                    "S02707098",
+                    "S02707098"
+                ]
 	    	}
         }
         # Serializing json
@@ -79,13 +87,18 @@ else:
         timeout=1
     )
     running = True
-    serialReady = False
+    
     i = 0 #Counter for all commands
     while running:
-        readSerial = ser.readline().strip().decode()
-        print(readSerial)
-        if readSerial == "Ready":
-            serialReady = True
+        serialReady = False
+        try:
+            readSerial = ser.readline().strip().decode()
+            print(readSerial)
+            if ("Ready" in readSerial) or ("COMMAND" in readSerial):
+                serialReady = True
+        except:
+            serialReady = False
+    
         if serialReady:
             #print(commands)
             if len(sys.argv) == 3:
@@ -100,7 +113,7 @@ else:
                     running = False
                 else:
                     if i < len(commands):
-                        print(f"Sent: {commands[i]}")
+                        print(f"Sent {i+1}: {commands[i]}")
                         ser.write(bytearray(commands[i],'ascii'))
                         #print(ser.readline().strip().decode())
                         i = i + 1
